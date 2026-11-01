@@ -1,3 +1,8 @@
+# RollFor (Salahaja)
+sica42's RollFor 4.8.1 with fixes for this client. The repo root is the addon: download a release zip and extract it into `Interface\AddOns\`.
+
+* Clicking the minimap button opens the window again on clients with ClassicAPI (it used to open and close on one click).
+
 # RollFor
 A World of Warcraft (1.12.1) addon that manages rolling for items.  
 The [original version of RollFor](https://github.com/obszczymucha/roll-for-vanilla) supports both 1.12.1 and 2.5.2 clients, but this version has only been tested on 1.12.1.
