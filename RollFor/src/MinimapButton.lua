@@ -57,6 +57,8 @@ function M.new( api, db, manage_softres_fn, winners_popup_fn, options_popup_fn, 
 
     function frame.OnClick( self )
       if m.vanilla then self = this end
+      -- Releasing a drag over the button is not a click.
+      if was_dragging then return end
 
       if m.is_shift_key_down() then
         winners_popup_fn()
@@ -80,7 +82,11 @@ function M.new( api, db, manage_softres_fn, winners_popup_fn, options_popup_fn, 
       if m.vanilla then self = this end
 
       self.icon:SetTexCoord( 0.05, 0.95, 0.05, 0.95 )
-      if m.vanilla and not was_dragging then self:OnClick() end
+      -- Local fix: OnClick used to be called from here as well, because plain
+      -- 1.12 ignored RegisterForClicks( "anyUp" ) and OnClick never fired.
+      -- ClassicAPI now makes "AnyUp" work, so a click toggled the window twice
+      -- and it never opened. The clicks are registered by their 1.12 names
+      -- below instead, so OnClick fires exactly once either way.
     end
 
     function frame.OnEnter( self )
@@ -227,7 +233,7 @@ function M.new( api, db, manage_softres_fn, winners_popup_fn, options_popup_fn, 
     frame:SetWidth( 31 )
     frame:SetHeight( 31 )
     frame:SetFrameLevel( 8 )
-    frame:RegisterForClicks( "anyUp" )
+    frame:RegisterForClicks( "LeftButtonUp", "RightButtonUp", "MiddleButtonUp" )
     frame:RegisterForDrag( "LeftButton" )
     frame:SetHighlightTexture( "Interface\\Minimap\\UI-Minimap-ZoomButton-Highlight" )
 
